@@ -1,0 +1,41 @@
+-- Create table
+create table PAISES
+(
+  cd_pais      NUMBER(5) not null,
+  cd_ibge_pais NUMBER(4) not null,
+  nm_pais      VARCHAR2(40) not null,
+  dt_usuinc    DATE not null,
+  nm_usuinc    VARCHAR2(50) not null,
+  dt_usualt    DATE,
+  nm_usualt    VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table PAISES
+  add constraint PK_PAISES primary key (CD_IBGE_PAIS)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on PAISES to GERAL;

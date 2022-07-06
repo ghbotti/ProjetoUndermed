@@ -1,0 +1,56 @@
+-- Create table
+create table FUNCIONARIOS
+(
+  cd_funcionario     NUMBER(5) not null,
+  nr_cpf_funcionario NUMBER(11) not null,
+  nr_rg              NUMBER(9),
+  nm_funcionario     VARCHAR2(50) not null,
+  st_sexo            VARCHAR2(1 CHAR) not null,
+  st_estado_civil    VARCHAR2(1 CHAR) not null,
+  nr_telefone        NUMBER(11) not null,
+  nr_telefone2       NUMBER(11),
+  cd_funcao          NUMBER(6) not null,
+  cd_usuario         NUMBER(5),
+  nm_usuario         VARCHAR2(15),
+  dt_usuinc          DATE not null,
+  nm_usuinc          VARCHAR2(50) not null,
+  dt_usualt          DATE,
+  nm_usualt          VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table FUNCIONARIOS
+  add constraint PK_FUNCIONARIOS primary key (NR_CPF_FUNCIONARIO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate check constraints 
+alter table FUNCIONARIOS
+  add constraint CK_ESTADO_CIVIL_FUNCIONARIO
+  check (ST_ESTADO_CIVIL IN ('S','C','V'));
+alter table FUNCIONARIOS
+  add constraint CK_SEXO_FUNCIONARIO
+  check (ST_SEXO IN ('M','F'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on FUNCIONARIOS to GERAL;

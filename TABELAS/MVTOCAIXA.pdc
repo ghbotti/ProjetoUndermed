@@ -1,0 +1,51 @@
+-- Create table
+create table MVTOCAIXA
+(
+  cd_caixa      NUMBER(5) not null,
+  tp_caixa      VARCHAR2(1 CHAR) not null,
+  cd_historico  NUMBER(5) not null,
+  dt_caixa      DATE not null,
+  vl_caixa      NUMBER(7,2) not null,
+  ds_observacao VARCHAR2(300),
+  dt_usuinc     DATE not null,
+  nm_usuinc     VARCHAR2(50) not null,
+  dt_usualt     DATE,
+  nm_usualt     VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 640K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table MVTOCAIXA
+  add constraint PK_MVTOCAIXA primary key (CD_CAIXA)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table MVTOCAIXA
+  add constraint FK_MVTOCAIXA_HISTORICOS foreign key (CD_HISTORICO)
+  references HISTORICOS (CD_HISTORICO);
+-- Create/Recreate check constraints 
+alter table MVTOCAIXA
+  add constraint CK_TP_CAIXA
+  check (TP_CAIXA IN ('C','D'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on MVTOCAIXA to GERAL;

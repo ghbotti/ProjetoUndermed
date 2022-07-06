@@ -1,0 +1,57 @@
+-- Create table
+create table FIITEREC
+(
+  cd_documento NUMBER(5) not null,
+  cd_item      NUMBER(5) not null,
+  st_item      VARCHAR2(2) not null,
+  cd_exame     NUMBER(5) not null,
+  qt_item      NUMBER(5) not null,
+  vl_item      NUMBER(7,2) not null,
+  dt_usuinc    DATE not null,
+  nm_usuinc    VARCHAR2(50) not null,
+  dt_usualt    DATE,
+  nm_usualt    VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 256K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Add comments to the columns 
+comment on column FIITEREC.st_item
+  is 'AB-Aberto, CA-Cancelado, PG-Pago, VE-Vencido, FT-Faturado';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table FIITEREC
+  add constraint PK_FIITEREC primary key (CD_DOCUMENTO, CD_ITEM)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table FIITEREC
+  add constraint FK_FIITEREC_EXAMES foreign key (CD_EXAME)
+  references EXAMES (CD_EXAME);
+alter table FIITEREC
+  add constraint FK_FIITEREC_FIMESREC foreign key (CD_DOCUMENTO)
+  references FIMESREC (CD_DOCUMENTO);
+-- Create/Recreate check constraints 
+alter table FIITEREC
+  add constraint CK_ST_ITEM
+  check (ST_ITEM IN ('AB','CA', 'PG', 'VE', 'FT'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on FIITEREC to GERAL;

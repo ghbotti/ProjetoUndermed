@@ -1,0 +1,49 @@
+-- Create table
+create table ETAPAS
+(
+  cd_etapa        NUMBER(5) not null,
+  nm_etapa        VARCHAR2(50) not null,
+  st_repete_etapa VARCHAR2(1 CHAR) not null,
+  st_demissao     VARCHAR2(1 CHAR) not null,
+  dt_usuinc       DATE not null,
+  nm_usuinc       VARCHAR2(50) not null,
+  dt_usualt       DATE,
+  nm_usualt       VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ETAPAS
+  add constraint PK_ETAPAS primary key (CD_ETAPA)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate check constraints 
+alter table ETAPAS
+  add constraint CK_ST_DEMISSAO
+  check (ST_DEMISSAO IN ('S','N'));
+alter table ETAPAS
+  add constraint CK_ST_REPETE_ETAPA
+  check (ST_REPETE_ETAPA IN ('S','N'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on ETAPAS to GERAL;

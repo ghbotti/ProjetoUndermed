@@ -1,0 +1,72 @@
+-- Create table
+create table FIMESREC
+(
+  cd_documento   NUMBER(5) not null,
+  st_origem      VARCHAR2(1 CHAR) not null,
+  st_documento   VARCHAR2(2) not null,
+  st_caixa       VARCHAR2(1 CHAR) not null,
+  dt_emissao     DATE not null,
+  dt_vencimento  DATE not null,
+  vl_documento   NUMBER(7,2) not null,
+  cd_historico   NUMBER(5),
+  ds_observacao  VARCHAR2(500),
+  dt_pagamento   DATE,
+  vl_pago        NUMBER(7,2),
+  sq_ftfatmen    NUMBER(5),
+  sq_lanctoexame NUMBER(5),
+  dt_usuinc      DATE not null,
+  nm_usuinc      VARCHAR2(50) not null,
+  dt_usualt      DATE,
+  nm_usualt      VARCHAR2(50),
+  cd_cliente     NUMBER(5) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 512K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Add comments to the columns 
+comment on column FIMESREC.st_origem
+  is 'E - Exame, M - Mensalidade';
+comment on column FIMESREC.st_documento
+  is 'AB - Aberto, CA - Cancelado, PG - Pago, VE - Vencido, FT - Faturado';
+comment on column FIMESREC.st_caixa
+  is '[S]Sim, [N]Não. Indica se o valor pago foi para o caixa. Exames paos a vista.';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table FIMESREC
+  add constraint PK_FIMESREC primary key (CD_DOCUMENTO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table FIMESREC
+  add constraint FK_FIMESREC_CLIENTES foreign key (CD_CLIENTE)
+  references CLIENTES (CD_CLIENTE);
+-- Create/Recreate check constraints 
+alter table FIMESREC
+  add constraint CK_ST_CAIXA
+  check (ST_CAIXA IN ('S','N'));
+alter table FIMESREC
+  add constraint CK_ST_DOCUMENTO
+  check (ST_DOCUMENTO IN ('AB','CA', 'PG', 'VE', 'FT'));
+alter table FIMESREC
+  add constraint CK_ST_ORIGEM
+  check (ST_ORIGEM IN ('M','E','O'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on FIMESREC to GERAL;

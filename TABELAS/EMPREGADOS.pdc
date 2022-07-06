@@ -1,0 +1,79 @@
+-- Create table
+create table EMPREGADOS
+(
+  cd_empregado     NUMBER(5) not null,
+  nr_arquivo       NUMBER(5),
+  nr_cpf_empregado NUMBER(11) not null,
+  nm_empregado     VARCHAR2(50) not null,
+  dt_nascimento    DATE not null,
+  st_sexo          CHAR(1) not null,
+  st_estado_civil  CHAR(1) not null,
+  nr_telefone      NUMBER(11),
+  nr_telefone2     NUMBER(11),
+  ds_setor         VARCHAR2(30),
+  dt_admissao      DATE,
+  cd_funcao        NUMBER(5) not null,
+  dt_usuinc        DATE not null,
+  nm_usuinc        VARCHAR2(50) not null,
+  dt_usualt        DATE,
+  nm_usualt        VARCHAR2(50),
+  nr_rg            VARCHAR2(20),
+  cd_cliente       NUMBER(5) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 768K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table EMPREGADOS
+  add constraint PK_EMPREGADO primary key (CD_EMPREGADO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 256K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table EMPREGADOS
+  add constraint FK_EMPREGADOS_CLIENTES foreign key (CD_CLIENTE)
+  references CLIENTES (CD_CLIENTE);
+alter table EMPREGADOS
+  add constraint FK_EMPREGADOS_FUNCOES foreign key (CD_FUNCAO)
+  references FUNCOES (CD_FUNCAO);
+-- Create/Recreate check constraints 
+alter table EMPREGADOS
+  add constraint CK_ESTADO_CIVIL
+  check (ST_ESTADO_CIVIL  IN ('C','D','S','U','V'));
+alter table EMPREGADOS
+  add constraint CK_SEXO
+  check (ST_SEXO IN ('M','F'));
+-- Create/Recreate indexes 
+create unique index PK_EMPREGADOS on EMPREGADOS (NR_CPF_EMPREGADO)
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 256K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on EMPREGADOS to GERAL;

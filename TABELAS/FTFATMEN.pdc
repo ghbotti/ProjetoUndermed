@@ -1,0 +1,55 @@
+-- Create table
+create table FTFATMEN
+(
+  sq_ftfatmen       NUMBER(5) not null,
+  st_mensalidade    VARCHAR2(2) not null,
+  nr_mes_referencia NUMBER(2) not null,
+  nr_ano_referencia NUMBER(4) not null,
+  dt_vencimento     DATE not null,
+  vl_mensalidade    NUMBER(7,2) not null,
+  dt_usuinc         DATE not null,
+  nm_usuinc         VARCHAR2(50) not null,
+  dt_usualt         DATE,
+  nm_usualt         VARCHAR2(50),
+  cd_cliente        NUMBER(5)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Add comments to the columns 
+comment on column FTFATMEN.st_mensalidade
+  is 'AB-Aberto, CA-Cancelado, FT-Faturado, PG-Pago';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table FTFATMEN
+  add constraint PK_FTFATMEN primary key (SQ_FTFATMEN)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table FTFATMEN
+  add constraint FK_FTFATMEN_CLIENTES foreign key (CD_CLIENTE)
+  references CLIENTES (CD_CLIENTE);
+-- Create/Recreate check constraints 
+alter table FTFATMEN
+  add constraint CK_ST_MENSALIDADE
+  check (ST_MENSALIDADE IN ('AB','CA','FT','PG'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on FTFATMEN to GERAL;

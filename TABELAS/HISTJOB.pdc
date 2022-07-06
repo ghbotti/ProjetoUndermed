@@ -1,0 +1,33 @@
+-- Create table
+create table HISTJOB
+(
+  cd_funcao  NUMBER(5) not null,
+  dt_inicio  DATE not null,
+  dt_fim     DATE not null,
+  dt_usuinc  DATE not null,
+  nm_usuinc  VARCHAR2(50) not null,
+  dt_usualt  DATE,
+  nm_usualt  VARCHAR2(50),
+  cd_cliente NUMBER(5) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table HISTJOB
+  add constraint FK_HISTJOB_CLIENTES foreign key (CD_CLIENTE)
+  references CLIENTES (CD_CLIENTE);
+alter table HISTJOB
+  add constraint FK_HISTJOB_FUNCOES foreign key (CD_FUNCAO)
+  references FUNCOES (CD_FUNCAO);
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on HISTJOB to GERAL;

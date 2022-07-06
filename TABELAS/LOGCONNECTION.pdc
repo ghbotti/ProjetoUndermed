@@ -1,0 +1,27 @@
+-- Create table
+create table LOGCONNECTION
+(
+  sid         NUMBER,
+  audsid      NUMBER,
+  username    VARCHAR2(30),
+  osuser      VARCHAR2(30),
+  machine     VARCHAR2(64),
+  port        NUMBER,
+  terminal    VARCHAR2(16),
+  logon_time  DATE,
+  logoff_time DATE
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on LOGCONNECTION to GERAL;

@@ -1,0 +1,41 @@
+-- Create table
+create table HISTCANCQUITACAO
+(
+  cd_cancquitacao     NUMBER(5) not null,
+  nr_cpf_cnpj_cliente NUMBER(14) not null,
+  cd_documento        NUMBER(5) not null,
+  vl_documento        NUMBER(7,2) not null,
+  dt_cancelamento     DATE not null,
+  ds_motivo           VARCHAR2(500) not null,
+  nm_usuario          VARCHAR2(50) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table HISTCANCQUITACAO
+  add constraint PK_HISTCANCQUITACAO primary key (CD_CANCQUITACAO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on HISTCANCQUITACAO to GERAL;

@@ -1,0 +1,29 @@
+-- Create table
+create table CONFIGURACOES
+(
+  dt_configuracao         DATE not null,
+  ds_imagem_principal     VARCHAR2(300) not null,
+  ds_imagem_relatorio     VARCHAR2(300) not null,
+  ds_caminho_execut       VARCHAR2(300) not null,
+  ds_versao               VARCHAR2(5) not null,
+  dt_versao               DATE not null,
+  dt_usuinc               DATE not null,
+  nm_usuinc               VARCHAR2(50) not null,
+  dt_usualt               DATE,
+  nm_usualt               VARCHAR2(50),
+  ds_caminho_rep_to_excel VARCHAR2(200)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on CONFIGURACOES to GERAL;

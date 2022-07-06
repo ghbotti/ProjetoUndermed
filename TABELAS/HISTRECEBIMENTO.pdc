@@ -1,0 +1,41 @@
+-- Create table
+create table HISTRECEBIMENTO
+(
+  cd_recebimento      NUMBER(5) not null,
+  nr_cpf_cnpj_cliente NUMBER(14) not null,
+  cd_documento        NUMBER(5) not null,
+  dt_pagamento        DATE not null,
+  valor_pagamento     NUMBER(7,2) not null,
+  dt_usuinc           DATE not null,
+  nm_usuinc           VARCHAR2(50) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table HISTRECEBIMENTO
+  add constraint PK_HISTRECEBIMENTO primary key (CD_RECEBIMENTO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on HISTRECEBIMENTO to GERAL;

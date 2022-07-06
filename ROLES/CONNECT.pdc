@@ -1,0 +1,4 @@
+-- Create the role 
+create role CONNECT;
+-- Grant/Revoke system privileges 
+grant create session to CONNECT;

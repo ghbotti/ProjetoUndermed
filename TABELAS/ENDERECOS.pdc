@@ -1,0 +1,73 @@
+-- Create table
+create table ENDERECOS
+(
+  cd_endereco        NUMBER(5) not null,
+  tp_endereco        CHAR(1 CHAR) not null,
+  nr_cep             NUMBER(8) not null,
+  ds_logradouro      VARCHAR2(50) not null,
+  nr_logradouro      VARCHAR2(4) not null,
+  ds_complemento     VARCHAR2(50),
+  ds_bairro          VARCHAR2(50),
+  cd_ibge_cidade     NUMBER(7) not null,
+  nr_cnpj_clinica    NUMBER(14),
+  nr_cpf_medico      NUMBER(11),
+  nr_cpf_funcionario NUMBER(11),
+  dt_usuinc          DATE not null,
+  nm_usuinc          VARCHAR2(50) not null,
+  dt_usualt          DATE,
+  nm_usualt          VARCHAR2(50),
+  cd_cliente         NUMBER(5),
+  cd_empregado       NUMBER(5)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ENDERECOS
+  add constraint PK_ENDERECOS primary key (CD_ENDERECO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table ENDERECOS
+  add constraint FK_ENDERECOS_CIDADES foreign key (CD_IBGE_CIDADE)
+  references CIDADES (CD_IBGE_CIDADE);
+alter table ENDERECOS
+  add constraint FK_ENDERECOS_CLIENTES foreign key (CD_CLIENTE)
+  references CLIENTES (CD_CLIENTE);
+alter table ENDERECOS
+  add constraint FK_ENDERECOS_CLINICAS foreign key (NR_CNPJ_CLINICA)
+  references CLINICAS (NR_CNPJ_CLINICA);
+alter table ENDERECOS
+  add constraint FK_ENDERECOS_EMPREGADOS foreign key (CD_EMPREGADO)
+  references EMPREGADOS (CD_EMPREGADO);
+alter table ENDERECOS
+  add constraint FK_ENDERECOS_FUNCIONARIOS foreign key (NR_CPF_FUNCIONARIO)
+  references FUNCIONARIOS (NR_CPF_FUNCIONARIO);
+alter table ENDERECOS
+  add constraint FK_ENDERECOS_MEDICOS foreign key (NR_CPF_MEDICO)
+  references MEDICOS (NR_CPF_MEDICO);
+-- Create/Recreate check constraints 
+alter table ENDERECOS
+  add constraint CK_TP_ENDERECO
+  check (TP_ENDERECO IN ('P'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on ENDERECOS to GERAL;

@@ -1,0 +1,72 @@
+-- Create table
+create table LANCTOEXAME
+(
+  cd_lancamento     NUMBER(5) not null,
+  st_lancamento     VARCHAR2(2) not null,
+  cd_exame          NUMBER(5),
+  cd_etapa          NUMBER(5),
+  dt_exame          DATE not null,
+  dt_faturamento    DATE not null,
+  tp_condicao_pagto VARCHAR2(1 CHAR) not null,
+  vl_exame          NUMBER(7,2) not null,
+  dt_usuinc         DATE not null,
+  nm_usuinc         VARCHAR2(50) not null,
+  dt_usualt         DATE,
+  nm_usualt         VARCHAR2(50),
+  cd_cliente        NUMBER(5) not null,
+  cd_empregado      NUMBER(5) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 2688K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Add comments to the columns 
+comment on column LANCTOEXAME.st_lancamento
+  is 'AB - Aberto, CA - Cancelado, FT - Faturado, PG - Pago';
+comment on column LANCTOEXAME.tp_condicao_pagto
+  is 'V - A Vista, P - A Prazo';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table LANCTOEXAME
+  add constraint PK_LANCTOEXAME primary key (CD_LANCAMENTO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 640K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table LANCTOEXAME
+  add constraint FK_LANCTOEXAME_CLIENTES foreign key (CD_CLIENTE)
+  references CLIENTES (CD_CLIENTE);
+alter table LANCTOEXAME
+  add constraint FK_LANCTOEXAME_EMPREGADOS foreign key (CD_EMPREGADO)
+  references EMPREGADOS (CD_EMPREGADO);
+alter table LANCTOEXAME
+  add constraint FK_LANCTOEXAME_ETAPAS foreign key (CD_ETAPA)
+  references ETAPAS (CD_ETAPA);
+alter table LANCTOEXAME
+  add constraint FK_LANCTOEXAME_EXAMES foreign key (CD_EXAME)
+  references EXAMES (CD_EXAME);
+-- Create/Recreate check constraints 
+alter table LANCTOEXAME
+  add constraint CK_CONDICAO_PAGTO
+  check (TP_CONDICAO_PAGTO IN ('V','P'));
+alter table LANCTOEXAME
+  add constraint CK_ST_LANCAMENTO
+  check (ST_LANCAMENTO IN ('AB','CA','FT','PG'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on LANCTOEXAME to GERAL;

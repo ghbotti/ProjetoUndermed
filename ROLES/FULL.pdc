@@ -1,0 +1,5 @@
+-- Create the role 
+create role FULL;
+-- Grant/Revoke object privileges 
+grant execute on PRC_ALTERA_SENHA to FULL;
+grant execute on PRC_CRIA_USUARIO to FULL;

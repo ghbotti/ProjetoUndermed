@@ -1,0 +1,40 @@
+-- Create table
+create table OBSERVACOES
+(
+  cd_observacao NUMBER(5) not null,
+  ds_observacao VARCHAR2(500) not null,
+  dt_usuinc     DATE not null,
+  nm_usuinc     VARCHAR2(50) not null,
+  dt_usualt     DATE,
+  nm_usualt     VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table OBSERVACOES
+  add constraint PK_OBSERVACOES primary key (CD_OBSERVACAO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on OBSERVACOES to GERAL;

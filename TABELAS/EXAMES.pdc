@@ -1,0 +1,45 @@
+-- Create table
+create table EXAMES
+(
+  cd_exame     NUMBER(5) not null,
+  nm_exame     VARCHAR2(50) not null,
+  cd_historico NUMBER(5) not null,
+  qt_meses     NUMBER(2) not null,
+  dt_usuinc    DATE not null,
+  nm_usuinc    VARCHAR2(50) not null,
+  dt_usualt    DATE,
+  nm_usualt    VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table EXAMES
+  add constraint PK_EXAMES primary key (CD_EXAME)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table EXAMES
+  add constraint FK_EXAMES_HISTORICOS foreign key (CD_HISTORICO)
+  references HISTORICOS (CD_HISTORICO);
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on EXAMES to GERAL;

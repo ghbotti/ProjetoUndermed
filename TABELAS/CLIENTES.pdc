@@ -1,0 +1,66 @@
+-- Create table
+create table CLIENTES
+(
+  cd_cliente          NUMBER(5) not null,
+  tp_pessoa           CHAR(1 CHAR),
+  nr_cpf_cnpj_cliente NUMBER(14) not null,
+  nr_rg               NUMBER(9),
+  nr_insc_estadual    NUMBER(12),
+  nm_razao_social     VARCHAR2(50) not null,
+  nm_fantasia         VARCHAR2(50),
+  nr_telefone         NUMBER(11) not null,
+  nr_telefone2        NUMBER(11),
+  vl_mensalidade      NUMBER(7,2),
+  dt_usuinc           DATE not null,
+  nm_usuinc           VARCHAR2(50) not null,
+  dt_usualt           DATE,
+  nm_usualt           VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table CLIENTES
+  add constraint PK_CLIENTE primary key (CD_CLIENTE)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate check constraints 
+alter table CLIENTES
+  add constraint CK_TP_PESSOA
+  check (TP_PESSOA IN ('J','F','C'));
+-- Create/Recreate indexes 
+create unique index PK_CLIENTES on CLIENTES (NR_CPF_CNPJ_CLIENTE)
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on CLIENTES to GERAL;

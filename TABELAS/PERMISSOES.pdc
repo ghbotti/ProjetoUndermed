@@ -1,0 +1,83 @@
+-- Create table
+create table PERMISSOES
+(
+  cd_usuario                 NUMBER(5) not null,
+  nm_usuario                 VARCHAR2(15) not null,
+  ind_complementares         VARCHAR2(1 CHAR) not null,
+  ind_cliente                VARCHAR2(1 CHAR) not null,
+  ind_etapas                 VARCHAR2(1 CHAR) not null,
+  ind_exames                 VARCHAR2(1 CHAR) not null,
+  ind_funcoes                VARCHAR2(1 CHAR) not null,
+  ind_funcionarios           VARCHAR2(1 CHAR) not null,
+  ind_paises                 VARCHAR2(1 CHAR) not null,
+  ind_estados                VARCHAR2(1 CHAR) not null,
+  ind_cidades                VARCHAR2(1 CHAR) not null,
+  ind_observacoes            VARCHAR2(1 CHAR) not null,
+  ind_fatura_exame           VARCHAR2(1 CHAR) not null,
+  ind_fatura_mensalidade     VARCHAR2(1 CHAR) not null,
+  ind_baixa_receber          VARCHAR2(1 CHAR) not null,
+  ind_estorno_recebimento    VARCHAR2(1 CHAR) not null,
+  ind_lancto_manual          VARCHAR2(1 CHAR) not null,
+  ind_cad_clinica            VARCHAR2(1 CHAR) not null,
+  ind_cad_funcionario        VARCHAR2(1 CHAR) not null,
+  ind_cad_medico             VARCHAR2(1 CHAR) not null,
+  ind_cad_historico          VARCHAR2(1 CHAR) not null,
+  ind_lancto_caixa           VARCHAR2(1 CHAR) not null,
+  ind_fechamento_mensal      VARCHAR2(1 CHAR) not null,
+  ind_ficha_medica           VARCHAR2(1 CHAR) not null,
+  ind_lancto_exames          VARCHAR2(1 CHAR) not null,
+  ind_movimentacao           VARCHAR2(1 CHAR) not null,
+  ind_recibo                 VARCHAR2(1 CHAR) not null,
+  ind_cad_usuarios           VARCHAR2(1 CHAR) not null,
+  ind_permite_acesso         VARCHAR2(1 CHAR) not null,
+  ind_troca_senha            VARCHAR2(1 CHAR) not null,
+  ind_configuracoes          VARCHAR2(1 CHAR) not null,
+  ind_rel_clientes           VARCHAR2(1 CHAR) not null,
+  ind_rel_funcionarios       VARCHAR2(1 CHAR) not null,
+  ind_rel_fatura_exame       VARCHAR2(1 CHAR) not null,
+  ind_rel_fatura_mensalidade VARCHAR2(1 CHAR) not null,
+  ind_rel_receber            VARCHAR2(1 CHAR) not null,
+  ind_rel_contas_recebidas   VARCHAR2(1 CHAR) not null,
+  ind_rel_estornos           VARCHAR2(1 CHAR) not null,
+  ind_rel_funcio_clinica     VARCHAR2(1 CHAR) not null,
+  ind_rel_medico             VARCHAR2(1 CHAR) not null,
+  ind_rel_movto_caixa        VARCHAR2(1 CHAR) not null,
+  ind_rel_atendimento        VARCHAR2(1 CHAR) not null,
+  ind_rel_usuarios           VARCHAR2(1 CHAR) not null,
+  ind_rel_permissoes         VARCHAR2(1 CHAR) not null,
+  dt_usuinc                  DATE not null,
+  nm_usuinc                  VARCHAR2(50) not null,
+  dt_usualt                  DATE,
+  nm_usualt                  VARCHAR2(50),
+  ind_consultafuncio         VARCHAR2(1 CHAR) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table PERMISSOES
+  add constraint PK_PERMISSOES primary key (CD_USUARIO, NM_USUARIO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on PERMISSOES to GERAL;

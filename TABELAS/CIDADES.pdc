@@ -1,0 +1,45 @@
+-- Create table
+create table CIDADES
+(
+  cd_cidade      NUMBER(5) not null,
+  cd_ibge_cidade NUMBER(7) not null,
+  nm_cidade      VARCHAR2(40) not null,
+  cd_ibge_estado NUMBER(2) not null,
+  dt_usuinc      DATE not null,
+  nm_usuinc      VARCHAR2(50) not null,
+  dt_usualt      DATE,
+  nm_usualt      VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table CIDADES
+  add constraint PK_CIDADES primary key (CD_IBGE_CIDADE)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table CIDADES
+  add constraint FK_CIDADES_ESTADOS foreign key (CD_IBGE_ESTADO)
+  references ESTADOS (CD_IBGE_ESTADO);
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on CIDADES to GERAL;

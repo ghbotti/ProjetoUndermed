@@ -1,0 +1,47 @@
+-- Create table
+create table USUARIOS
+(
+  cd_usuario        NUMBER(5) not null,
+  nm_usuario        VARCHAR2(15) not null,
+  ds_senha          VARCHAR2(15) not null,
+  ind_master        CHAR(1 CHAR) not null,
+  st_senha_expirada CHAR(1 CHAR) not null,
+  dt_usuinc         DATE not null,
+  nm_usuinc         VARCHAR2(50) not null,
+  dt_usualt         DATE,
+  nm_usualt         VARCHAR2(50)
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table USUARIOS
+  add constraint PK_USUARIOS primary key (CD_USUARIO, NM_USUARIO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate check constraints 
+alter table USUARIOS
+  add constraint CK_ST_SENHA_EXPIRADA
+  check (ST_SENHA_EXPIRADA IN ('S','N'));
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on USUARIOS to GERAL;

@@ -1,0 +1,46 @@
+-- Create table
+create table RECIBOS
+(
+  cd_recibo  NUMBER(5) not null,
+  dt_recibo  DATE not null,
+  vl_recibo  NUMBER(7,2) not null,
+  ds_recibo  VARCHAR2(100) not null,
+  dt_usuinc  DATE not null,
+  nm_usuinc  VARCHAR2(50) not null,
+  dt_usualt  DATE,
+  nm_usualt  VARCHAR2(50),
+  cd_cliente NUMBER(5) not null
+)
+tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table RECIBOS
+  add constraint PK_RECIBOS primary key (CD_RECIBO)
+  using index 
+  tablespace DAD_UNDERMED_128K
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+alter table RECIBOS
+  add constraint FK_RECIBOS_CLIENTES foreign key (CD_CLIENTE)
+  references CLIENTES (CD_CLIENTE);
+-- Grant/Revoke object privileges 
+grant select, insert, update, delete, alter on RECIBOS to GERAL;
